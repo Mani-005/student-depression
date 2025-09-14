@@ -131,7 +131,7 @@ student-depression/
 ---
 
 ## 🌐 Demo Links
-- 🔗 **Streamlit App (Bulk Prediction + Clustering)** → [COMING SOON – Deploy on Streamlit Cloud]  
+- 🔗 **Streamlit App (Bulk Prediction + Clustering)** → [(https://student-depression-wbxysqc7pu35rottkkvrk7.streamlit.app/)]  
 - 🔗 **Flask API (Prediction Endpoint)** → Run locally with `python app.py`
 
 ---
