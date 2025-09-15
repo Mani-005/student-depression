@@ -138,7 +138,7 @@ student-depression/
 
 ## 🌐 Demo Links
 
-* 🔗 **Streamlit App (Prediction + Clustering)** → [Deployed Link]([https://student-depression-wbxysqc7pu35rottkkvrk7.streamlit.app/](https://student-depression-wbxysqc7pu35rottkkvrk7.streamlit.app/))
+* 🔗 **Streamlit App (Prediction + Clustering)** → [https://student-depression-wbxysqc7pu35rottkkvrk7.streamlit.app/](https://student-depression-wbxysqc7pu35rottkkvrk7.streamlit.app/]
 * 🔗 **Flask API (Prediction Endpoint)** → Run locally with `python app.py`
 
 ---
