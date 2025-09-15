@@ -6,6 +6,7 @@ import numpy as np
 from pathlib import Path
 from io import BytesIO
 
+
 st.set_page_config(page_title="Student Depression ", layout="centered")
 
 # Filenames (adjust if you used different names)
@@ -49,13 +50,13 @@ if page == "Home / Predict":
     clf, err = load_classifier()
     if err:
         st.error(f"Model load error: {err}")
-        st.info("Run `python train.py` first to create the classifier model file.")
+        st.info("Run python train.py first to create the classifier model file.")
         st.stop()
 
     st.markdown(
         "Upload a CSV (one row per student) to get batch predictions. "
         "CSV must contain these columns: "
-        "`hours_sleep, days_exercised, study_hours, social_score, attendance_pct, gpa, family_support, screen_time, concentration_issues, appetite_change`."
+        "hours_sleep, days_exercised, study_hours, social_score, attendance_pct, gpa, family_support, screen_time, concentration_issues, appetite_change."
     )
 
     uploaded = st.file_uploader("Upload CSV for batch prediction", type=["csv"])
@@ -89,10 +90,10 @@ if page == "Home / Predict":
     clf, err = load_classifier()
     if err:
         st.error(f"Model load error: {err}")
-        st.info("Run `python train.py` first to create the classifier model file.")
+        st.info("Run python train.py first to create the classifier model file.")
         st.stop()
 
-    st.markdown("Enter feature values for a single student and press **Predict**.")
+    st.markdown("Enter feature values for a single student and press Predict.")
     # Feature inputs (match the model's features)
     col1, col2 = st.columns(2)
     with col1:
@@ -109,29 +110,31 @@ if page == "Home / Predict":
         appetite_change = st.selectbox("appetite_change", options=["no","yes"], index=0)
 
     if st.button("Predict"):
-        # Build dataframe expected by your model pipeline
-        x = pd.DataFrame([{
-            "hours_sleep": hours_sleep,
-            "days_exercised": days_exercised,
-            "study_hours": study_hours,
-            "social_score": social_score,
-            "attendance_pct": attendance_pct,
-            "gpa": gpa,
-            "family_support": family_support,
-            "screen_time": screen_time,
-            "concentration_issues": concentration_issues,
-            "appetite_change": appetite_change
-        }])
-        try:
-            if hasattr(clf, "predict_proba"):
-                proba = clf.predict_proba(x)[:, 1][0]
-            else:
-                # fallback to predict output
-                proba = float(clf.predict(x)[0])
-            pred = int(clf.predict(x)[0])
-            st.success(f"Prediction: {pred}  —  Probability (positive): {proba:.3f}")
-        except Exception as e:
-            st.error("Model error: " + str(e))
+    # Build dataframe expected by your model pipeline
+     x = pd.DataFrame([{
+        "hours_sleep": hours_sleep,
+        "days_exercised": days_exercised,
+        "study_hours": study_hours,
+        "social_score": social_score,
+        "attendance_pct": attendance_pct,
+        "gpa": gpa,
+        "family_support": family_support,
+        "screen_time": screen_time,
+        "concentration_issues": concentration_issues,
+        "appetite_change": appetite_change
+    }])
+    try:
+        if hasattr(clf, "predict_proba"):
+            proba = clf.predict_proba(x)[:, 1][0]
+        else:
+            proba = float(clf.predict(x)[0])
+
+        pred = int(clf.predict(x)[0])
+        status = "Depressed" if pred == 1 else "Not Depressed"
+
+        st.success(f"Prediction: *{status}* (Confidence: {proba:.2f})")
+    except Exception as e:
+        st.error("Model error: " + str(e))
 
    
     if uploaded is not None:
@@ -163,7 +166,7 @@ else:
     bundle, err = load_kmeans_bundle()
     if err:
         st.error(f"KMeans bundle error: {err}")
-        st.info("Run `python clustering.py` first to create clustering outputs.")
+        st.info("Run python clustering.py first to create clustering outputs.")
         st.stop()
 
     # Load labelled CSV if exists
@@ -229,5 +232,3 @@ else:
             st.error("Error processing uploaded file: " + str(e))
 
 # Footer
-
-
